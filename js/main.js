@@ -13,26 +13,27 @@ void function (D) {
 	
 	;
 	
-	var s = D[CEL]("s");
+	var s = D[CEL]("script");
 	// s.src = "//code.jquery.com/jquery-2.1.1.js";			//production
 	s.src = "bower_components/jquery/dist/jquery.min.js";	//dev
 	D["body"][_AC](s);
 	s.onload = function () {
 		$(function () {
-			alert($ instanceof jQuery);
+			alert($ instanceof jQuery); //false
+			
+			$.getJSON( "ajax/test.json", function(data ) {
+			  var items = [];
+			  $.each( data, function( key, val ) {
+				items.push( "<li id='" + key + "'>" + val + "</li>" );
+			  });
+			 
+			  $( "<ul/>", {
+				"class": "my-new-list",
+				html: items.join( "" )
+			  }).appendTo( "body" );
+			});
 		});
 	};
 	
 }(document);
 
-$.getJSON( "ajax/test.json", function(data ) {
-  var items = [];
-  $.each( data, function( key, val ) {
-    items.push( "<li id='" + key + "'>" + val + "</li>" );
-  });
- 
-  $( "<ul/>", {
-    "class": "my-new-list",
-    html: items.join( "" )
-  }).appendTo( "body" );
-});
