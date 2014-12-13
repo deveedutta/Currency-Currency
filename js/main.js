@@ -6,6 +6,7 @@ void function (D) {
 	,	undefined		= void 0
 	,	_observables 	= []
 	,	_observers		= []
+	,	_observableProp	= []
 	,	dictionary	= null				//dictionary is a marker saying upcoming VARs are short-hands
 	,	_AC			= "appendChild"
 	,	CEL			= "createElement"
@@ -26,11 +27,19 @@ void function (D) {
 			$parentContainer = $("#parentContainer");
 			_observables 	 = $("[data-observable]",$parentContainer);
 			_observers 		 = $("[data-observer]", $parentContainer);
+			_observableProp	 = $("[data-observable-prop]", $parentContainer);
+			
 			if(_observables.length === _observers.length) {
-				_observables.map(function(observableItem) {
-					observableItem
-					
-				});
+				for ( var i = 0; i<_observables.length; i++ ) {
+					Object.defineProperty ( _observables[i], _observableProp[i], {
+						get : function () {
+							return _observables[i][_observableProp[i]];
+						},
+						set : function () {
+							return window[ _observers[i] ].call(_observables[i], arguments);
+						}
+					});
+				}
 			} else {
 				throw "Fewer Observers mapped to Observables";
 			}
@@ -52,7 +61,10 @@ void function (D) {
 	};
 }(document);
 
-
+function baseCurrencyChanged () {
+	console.log(arguments);
+	return 
+}
 window.globalErrorListener = (function () {
 	var args = [].slice.call(arguments);
 	console.log(args);
