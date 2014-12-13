@@ -22,19 +22,20 @@
 		<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="/" title="Exchange Rates API, JSON format, for Developers">
+					<a class="navbar-brand" href="/" title="Exchange API, JSON format, for Developers">
 						<span class="star">$</span> &nbsp;open exchange rates
 					</a>
 				</div>
 			</div>
 		</nav>
-		<div class="container">
+		<div class="container" id="parentContainer">
 			<h1>Currency Rate</h1>
 			<p>Multiple currencies, Cross comparison</p>
 			<div class="row">
 				<div class="col-md-5">
 					<div class="input-group">
-						<input id="baseCurrencyType" type="text" class="form-control" placeholder="Choose base Currency">
+						<input id="baseCurrencyType" data-observable="true" data-observer="baseCurrencyChanged" type="text" class="form-control" placeholder="Choose base Currency">
+						<input id="dummy" data-observable="true" type="text" class="form-control" placeholder="Choose base Currency">
 						<span class="input-group-addon search">
 							<span id="searchButton" class="glyphicon glyphicon-search"></span>
 						</span>
@@ -42,7 +43,7 @@
 				</div>
 				<div class="col-md-5">
 					<div class="input-group">
-						<input id="baseCurrencyType" type="text" class="form-control" placeholder="Add Multiple currencies">
+						<input id="comparisonCurrency" type="text" class="form-control" placeholder="Add Multiple currencies">
 						<span class="input-group-addon search">
 							<span id="addCurrency" class="glyphicon glyphicon-search"></span>
 						</span>
@@ -50,7 +51,7 @@
 					
 					
 					<div class="panel-heading">Panel heading</div>
-					<table class="table">
+					<table class="table currency-table">
 						<thead>
 							<tr>
 								<td>Rate</td>
