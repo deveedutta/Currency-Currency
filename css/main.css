@@ -1,0 +1,6 @@
+body { padding-top: 70px; }
+
+a.navbar-brand			{	color: #aaa;	}
+a.navbar-brand:hover	{	color: #fff !important;	text-decoration: none;	}
+a.navbar-brand .star 	{	font-size: 22px;position: relative;top: 3px;color: #1975B3;}
+.input-group-addon.search	{	cursor:pointer;}

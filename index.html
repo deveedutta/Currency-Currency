@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<!-- dev environment -->
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+		<!-- /dev environment -->
+		
+		
+		
+		<!-- prod environment -->
+		
+		<!-- /prod environment -->
+		
+		
+		<!-- common environment -->
+		<link rel="stylesheet" href="css/main.css" />
+		<!-- /common environment -->
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/" title="Exchange Rates API, JSON format, for Developers">
+						<span class="star">$</span> &nbsp;open exchange rates
+					</a>
+				</div>
+			</div>
+		</nav>
+		<div class="container">
+			<h1>Currency Rate</h1>
+			<p>Multiple currencies, Cross comparison</p>
+			<div class="row">
+				<div class="col-md-5">
+					<div class="input-group">
+						<input id="baseCurrencyType" type="text" class="form-control" placeholder="Choose base Currency">
+						<span class="input-group-addon search">
+							<span id="searchButton" class="glyphicon glyphicon-search"></span>
+						</span>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="input-group">
+						<input id="baseCurrencyType" type="text" class="form-control" placeholder="Add Multiple currencies">
+						<span class="input-group-addon search">
+							<span id="addCurrency" class="glyphicon glyphicon-search"></span>
+						</span>
+					</div>
+					
+					
+					<div class="panel-heading">Panel heading</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<td>Rate</td>
+								<td>Currency</td>
+							</tr>
+							<tr>
+								<td>617.25</td>
+								<td>INR</td>
+							</tr>
+							<tr>
+								<td>6.39</td>
+								<td>GBP</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

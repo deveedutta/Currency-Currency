@@ -1,0 +1,14 @@
+{
+  "name": "CurrencyRate",
+  "version": "0.0.0",
+  "authors": [
+    "deveedutta@gmail.com"
+  ],
+  "description": "a currency rate comparison app for exponential hiring challenge",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "localhost",
+  "devDependencies": {
+    "bootstrap": "~3.3.1"
+  }
+}
