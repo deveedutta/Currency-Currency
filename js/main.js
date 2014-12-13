@@ -28,23 +28,10 @@ void function (D) {
 			_observables 	 = $("[data-observable]",$parentContainer);
 			_observers 		 = $("[data-observer]", $parentContainer);
 			_observableProp	 = $("[data-observable-prop]", $parentContainer);
+
+			ObserverMapper();
+
 			
-			if(_observables.length === _observers.length) {
-				for ( var i = 0; i<_observables.length; i++ ) {
-					Object.defineProperty ( _observables[i], _observableProp[i], {
-						get : function () {
-							return _observables[i][_observableProp[i]];
-						},
-						set : function () {
-							return window[ _observers[i] ].call(_observables[i], arguments);
-						}
-					});
-				}
-			} else {
-				throw "Fewer Observers mapped to Observables";
-			}
-			
-			console.log(_observables, _observers);
 			
 			$.getJSON( "ajax/test.json", function(data ) {
 			  var items = [];
@@ -59,6 +46,56 @@ void function (D) {
 			});
 		});
 	};
+	Observer.prototype = {
+		type : null
+	,	value : null
+	,	observation :  {"observableProperty" : "Observer"}
+	};
+	
+	function ObserverFactory(node, options) {
+		var type = node.type;
+		var obj = null;
+		switch (type) {
+			case "text":
+			obj = new ObservableTextInput(options);
+			break;
+			
+			default:
+			break;
+		}
+		return obj;
+	
+	};
+	
+	
+	function ObserverMapper () {
+		if(_observables.length === _observers.length) {
+			for ( var i = 0; i<_observables.length; i++ ) {
+				_observers[i] 		= _observables.attr("data-observer");
+				_observableProp[i] 	= _observableProp.attr("data-observable-prop");
+				var obj 	= _observables[i];
+				var handler	= _observers[i];		//intentionally set to SETTER
+				var prop 	= _observableProp[i];	//property that we should observe
+				
+				obj.addEventListener("change", function() {
+					this.value = this.value;
+				}, false);
+				Object.defineProperty ( obj, prop, {
+					get : function () {
+						return this[prop];
+					},
+					set : function () {
+						return window[ handler ].call(this, arguments);
+					}
+				});
+			}
+			// console.log("_observables", _observables);
+			// console.log("_observers", _observers);
+			obj = handler = prop = null;
+		} else {
+			throw "Fewer Observers mapped to Observables";
+		}
+	}
 }(document);
 
 function baseCurrencyChanged () {
