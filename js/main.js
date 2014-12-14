@@ -19,10 +19,22 @@ void function (D) {
 	;
 	window._currencies		= []
 	var s 		= D[CEL]("script");
+	var s1 		= D[CEL]("script");
 	s.async 	= true;
+	s1.async 	= true;
+	s1.src		= "//code.jquery.com/jquery-1.10.2.js";
 	// s.src 	= "//code.jquery.com/jquery-2.1.1.js";			//production
 	s.src 		= "bower_components/jquery/dist/jquery.min.js";	//dev
-	D["body"][_AC](s);
+
+	D["body"][_AC](s1);
+	s1.onload  = function (){
+		s1.src		= "//code.jquery.com/ui/1.11.2/jquery-ui.js";
+		D["body"][_AC](s1);
+		s1.onload  = function (){
+			D["body"][_AC](s);
+		}
+	}
+	
 	s.onload = function () {
 		$(function () {
 			// $.getJSON( "https://gist.githubusercontent.com/Fluidbyte/2973986/raw/9ead0f85b6ee6071d018564fa5a314a0297212cc/Common-Currency.json",
@@ -36,6 +48,10 @@ void function (D) {
 			$parentContainer = $("#parentContainer");
 			_items 	 = $("[data-observable]", $parentContainer);
 			ObserverMapper();
+			
+			$( "#baseCurrencyType" ).autocomplete({
+				source: _currencies
+			});
 		});
 	};
 		
@@ -59,19 +75,6 @@ void function (D) {
 }(document);
 
 function baseCurrencyChanged (e) {
-	var THIS = $(e.target);
-	if (THIS.val().length < 1) return;
-	var $ul = $("#baseCurrencySuggestions");
-	$ul.empty();
-	var temp = [];
-	for( var i=0; i<_currencies.length; i++) {
-		if(_currencies[i].indexOf(THIS[0].value) > 0)
-			temp.push(_currencies[i]);
-	}
-	console.log(temp);
-	for( i=0; i<temp.length; i++) {
-		$ul.append("<li>" + temp[i] + "</ul>");
-	}
 	
 		
 	// $("#displayTable").trigger("update");
