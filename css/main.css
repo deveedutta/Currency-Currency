@@ -5,3 +5,6 @@ a.navbar-brand:hover	{	color: #fff !important;	text-decoration: none;	}
 a.navbar-brand .star 	{	font-size: 22px;position: relative;top: 3px;color: #1975B3;}
 .input-group-addon.search	{	cursor:pointer;}
 .currency-table tr:hover td	{	background: #eee;}
+.baseCurrencyContainer		{	position: relative;}
+#baseCurrencySuggestions	{	position: absolute; width: 100%; left: 0; top: 102%; background: #eee;}
+#baseCurrencySuggestions >li	{	display: block; padding: 10px 0; margin 0; }

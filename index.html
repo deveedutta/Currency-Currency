@@ -33,16 +33,21 @@
 			<p>Multiple currencies, Cross comparison</p>
 			<div class="row">
 				<div class="col-md-5">
-					<div class="input-group">
-						<input id="baseCurrencyType" data-observable="true" data-observe-event="change" data-action="baseCurrencyChanged" type="text" class="form-control" placeholder="Choose base Currency">
+					<div class="input-group baseCurrencyContainer">
+						<input id="baseCurrencyType" data-observable="true" data-observe-event="keydown" data-action="baseCurrencyChanged" type="text" class="form-control" placeholder="Choose base Currency">
 						<span class="input-group-addon search">
 							<span id="searchButton" class="glyphicon glyphicon-search"></span>
 						</span>
+						<ul id="baseCurrencySuggestions">
+							<!-- <li>dumb</li>
+							<li>dumb</li>
+							<li>dumb</li> -->
+						</ul>
 					</div>
 				</div>
 				<div class="col-md-5">
 					<div class="input-group">
-						<input id="comparisonCurrency" data-observable="true" data-observe-event="change" data-action="newCurrencyAdded" type="text" class="form-control" placeholder="Add Multiple currencies">
+						<input id="comparisonCurrency" data-observable="true" data-observe-event="keydown" data-action="newCurrencyAdded" type="text" class="form-control" placeholder="Add Multiple currencies">
 						<span class="input-group-addon search">
 							<span id="addCurrency" class="glyphicon glyphicon-search"></span>
 						</span>

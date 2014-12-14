@@ -8,7 +8,7 @@ void function (D) {
 	,	undefined		= void 0
 	,	_observables 	= []
 	,	_items			= []
-	,	_currencies		= null
+	,	_curr_data		= null
 	,	dictionary	= null				//dictionary is a marker saying upcoming VARs are short-hands
 	,	_AC			= "appendChild"
 	,	CEL			= "createElement"
@@ -17,7 +17,7 @@ void function (D) {
 	,	_IH			= "innerHTML"
 	
 	;
-	
+	window._currencies		= []
 	var s 		= D[CEL]("script");
 	s.async 	= true;
 	// s.src 	= "//code.jquery.com/jquery-2.1.1.js";			//production
@@ -28,8 +28,10 @@ void function (D) {
 			// $.getJSON( "https://gist.githubusercontent.com/Fluidbyte/2973986/raw/9ead0f85b6ee6071d018564fa5a314a0297212cc/Common-Currency.json",
 			$.getJSON( "js/currency-list.js",
 			function(data ) {
-				_currencies = data;
-				console.log(_currencies);
+				_curr_data = data;
+				for ( var name in _curr_data ) {
+					_currencies.push(name);
+				}
 			});
 			$parentContainer = $("#parentContainer");
 			_items 	 = $("[data-observable]", $parentContainer);
@@ -57,10 +59,20 @@ void function (D) {
 }(document);
 
 function baseCurrencyChanged (e) {
-	console.log("baseCurrencyChanged", arguments);
-	//popTheSuggestions
+	var THIS = $(e.target);
+	var $ul = $("#baseCurrencySuggestions");
+	$ul.empty();
+	var temp = [];
+	for( var i=0; i<_currencies.length; i++) {
+		_currencies[i].indexOf(THIS.value) && temp.push(_currencies[i]);
+	}
+	for( i=0; i<temp.length; i++) {
+		$ul.append("<li>" + temp[i] + "</ul>");
+		console.log(temp[i]);
+	}
 	
-	$("#displayTable").trigger("update");
+		
+	// $("#displayTable").trigger("update");
 	// loadAjax();
 	return null;
 }
