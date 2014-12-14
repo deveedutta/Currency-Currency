@@ -5,8 +5,7 @@ void function (D) {
 		//courtesy		: knockout-js
 	,	undefined		= void 0
 	,	_observables 	= []
-	,	_observers		= []
-	,	_observableProp	= []
+	,	_items			= []
 	,	dictionary	= null				//dictionary is a marker saying upcoming VARs are short-hands
 	,	_AC			= "appendChild"
 	,	CEL			= "createElement"
@@ -23,34 +22,20 @@ void function (D) {
 	D["body"][_AC](s);
 	s.onload = function () {
 		$(function () {
-			//alert($ instanceof jQuery); //false
 			$parentContainer = $("#parentContainer");
-			_observables 	 = $("[data-observable]",$parentContainer);
-			_observers 		 = $("[data-observer]", $parentContainer);
-			_observableProp	 = $("[data-observable-prop]", $parentContainer);
-
+			_items 	 = $("[data-observable]", $parentContainer);
 			ObserverMapper();
-
-			
-			
-			$.getJSON( "ajax/test.json", function(data ) {
-			  var items = [];
-			  $.each( data, function( key, val ) {
-				items.push( "<li id='" + key + "'>" + val + "</li>" );
-			  });
-			 
-			  $( "<ul/>", {
-				"class": "my-new-list",
-				html: items.join( "" )
-			  }).appendTo( "body" );
-			});
 		});
 	};
-	Observer.prototype = {
-		type : null
-	,	value : null
-	,	observation :  {"observableProperty" : "Observer"}
-	};
+		
+	function ObserverMapper () {
+		var options = {};
+		for ( var i = 0; i<_items.length; i++ ) {
+			options['node'] 		= _items[i];
+			options['handler'] 		= $(_items[i]).attr("data-observer");
+			_observables[i] 		= new ObserverFactory(_items[i], options);	
+		}
+	}
 	
 	function ObserverFactory(node, options) {
 		var type = node.type;
@@ -60,47 +45,48 @@ void function (D) {
 			obj = new ObservableTextInput(options);
 			break;
 			
+			case "...":
+			// ...
+			break;
+			
 			default:
 			break;
 		}
 		return obj;
 	
 	};
-	
-	
-	function ObserverMapper () {
-		if(_observables.length === _observers.length) {
-			for ( var i = 0; i<_observables.length; i++ ) {
-				_observers[i] 		= _observables.attr("data-observer");
-				_observableProp[i] 	= _observableProp.attr("data-observable-prop");
-				var obj 	= _observables[i];
-				var handler	= _observers[i];		//intentionally set to SETTER
-				var prop 	= _observableProp[i];	//property that we should observe
-				
-				obj.addEventListener("change", function() {
-					this.value = this.value;
-				}, false);
-				Object.defineProperty ( obj, prop, {
-					get : function () {
-						return this[prop];
-					},
-					set : function () {
-						return window[ handler ].call(this, arguments);
-					}
-				});
-			}
-			// console.log("_observables", _observables);
-			// console.log("_observers", _observers);
-			obj = handler = prop = null;
-		} else {
-			throw "Fewer Observers mapped to Observables";
-		}
+	function ObservableTextInput ( options) {
+		//not doing null checks against options
+		//I could map more properties, but it's cumbersome for this test
+		this['0'] = options.node;
+		$(this['0']).on("change", window[options.handler]);
 	}
+
 }(document);
 
 function baseCurrencyChanged () {
-	console.log(arguments);
-	return 
+	console.log("baseCurrencyChanged", arguments);
+	
+	// loadAjax();
+	return null;
+}
+function newCurrencyAdded () {
+	console.log("newCurrencyAdded", arguments);
+	return null;
+}
+
+function loadAjax() {
+	$.getJSON( "https://openexchangerates.org/api/latest.json?app_id=f9009aea3ff84eceac990e86e968ce9d&callback=baba", function(data ) {
+	  var items = [];
+	  $.each( data, function( key, val ) {
+		items.push( "<li id='" + key + "'>" + val + "</li>" );
+	  });
+	 
+	  $( "<ul/>", {
+		"class": "my-new-list",
+		html: items.join( "" )
+	  }).appendTo( "body" );
+	});
 }
 window.globalErrorListener = (function () {
 	var args = [].slice.call(arguments);
