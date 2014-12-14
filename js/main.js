@@ -1,3 +1,5 @@
+
+
 void function (D) {
 	var
 		window			= this || (0, eval)('this')	
@@ -6,6 +8,7 @@ void function (D) {
 	,	undefined		= void 0
 	,	_observables 	= []
 	,	_items			= []
+	,	_currencies		= null
 	,	dictionary	= null				//dictionary is a marker saying upcoming VARs are short-hands
 	,	_AC			= "appendChild"
 	,	CEL			= "createElement"
@@ -22,6 +25,12 @@ void function (D) {
 	D["body"][_AC](s);
 	s.onload = function () {
 		$(function () {
+			// $.getJSON( "https://gist.githubusercontent.com/Fluidbyte/2973986/raw/9ead0f85b6ee6071d018564fa5a314a0297212cc/Common-Currency.json",
+			$.getJSON( "js/currency-list.js",
+			function(data ) {
+				_currencies = data;
+				console.log(_currencies);
+			});
 			$parentContainer = $("#parentContainer");
 			_items 	 = $("[data-observable]", $parentContainer);
 			ObserverMapper();
@@ -34,7 +43,7 @@ void function (D) {
 			options['node'] 		= _items[i];
 			options['handler'] 		= $(_items[i]).attr("data-action");
 			options['event'] 		= $(_items[i]).attr("data-observe-event");
-			_observables[i] 		= new ObservableItem(_items[i], options);	
+			_observables[i] 		= new ObservableItem(options);	
 		}
 	}
 	
@@ -47,16 +56,18 @@ void function (D) {
 
 }(document);
 
-function baseCurrencyChanged () {
+function baseCurrencyChanged (e) {
 	console.log("baseCurrencyChanged", arguments);
+	//popTheSuggestions
 	
+	$("#displayTable").trigger("update");
 	// loadAjax();
 	return null;
 }
 
 function newCurrencyAdded () {
 	console.log("newCurrencyAdded", arguments);
-	$.trigger("update");
+	$("#displayTable").trigger("update");		//I gave up, No more delegation
 	return null;
 }
 
@@ -79,12 +90,12 @@ function loadAjax() {
 	  }).appendTo( "body" );
 	});
 }
-window.globalErrorListener = (function () {
-	var args = [].slice.call(arguments);
-	console.log(args);
-	
-});
+
 
 //inspired by 'ErrorCeption by Rakesh ' + Math.PI :D
 //Support : Chrome 13+ Firefox 6.0+ Internet Explorer 5.5+ Opera 11.60+ Safari 5.1+ 
-window.onerror = globalErrorListener;
+window.onerror = function globalErrorListener() {
+	var args = [].slice.call(arguments);
+	console.log(args);
+	
+};
