@@ -2,22 +2,28 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<title> Dollar Dollar </title>
 		<!-- dev environment -->
-		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+		<!--<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />-->
+		<!--<link rel="stylesheet" href="css/main.css" /> -->
 		<!-- /dev environment -->
 		
 		
 		
 		<!-- prod environment -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
-				
 		<!-- /prod environment -->
-		
-		
-		<!-- common environment -->
-		<link rel="stylesheet" href="css/main.css" />
-		
-		<!-- /common environment -->
+		<style type="text/css">
+			body { padding-top: 70px; }
+			a.navbar-brand			{	color: #aaa;	}
+			a.navbar-brand:hover	{	color: #fff !important;	text-decoration: none;	}
+			a.navbar-brand .star 	{	font-size: 22px;position: relative;top: 3px;color: #1975B3;}
+			.input-group-addon.search	{	cursor:pointer;}
+			.currency-table tr:hover td	{	background: #eee;}
+			.baseCurrencyContainer		{	position: relative;}
+		</style>
+
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
@@ -42,10 +48,10 @@
 					</div>
 					<div style="padding: 15px;"></div>
 					<div class="input-group">
-						<input id="currencyAmount" type="number" class="form-control" placeholder="1" value="1">
+						<input id="baseCurrencyAmount" type="number" class="form-control" placeholder="1" value="1">
 					</div>
 					<div class="input-group">
-						<input id="currencyType" type="text" disabled class="form-control" value="USD">
+						<input id="baseCurrencyName" type="text" disabled class="form-control" value="USD">
 					</div>
 				</div>
 				<div class="col-md-5">
