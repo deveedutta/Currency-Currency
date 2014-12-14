@@ -32,16 +32,20 @@ void function (D) {
 		var options = {};
 		for ( var i = 0; i<_items.length; i++ ) {
 			options['node'] 		= _items[i];
-			options['handler'] 		= $(_items[i]).attr("data-observer");
+			options['handler'] 		= $(_items[i]).attr("data-action");
+			options['event'] 		= $(_items[i]).attr("data-observe-event");
 			_observables[i] 		= new ObserverFactory(_items[i], options);	
 		}
 	}
 	
 	function ObserverFactory(node, options) {
-		var type = node.type;
+		var type = node.nodeName == "INPUT" && node.type || node.nodeName ;
 		var obj = null;
 		switch (type) {
 			case "text":
+			obj = new ObservableTextInput(options);
+			break;
+			case "TABLE":
 			obj = new ObservableTextInput(options);
 			break;
 			
@@ -59,7 +63,7 @@ void function (D) {
 		//not doing null checks against options
 		//I could map more properties, but it's cumbersome for this test
 		this['0'] = options.node;
-		$(this['0']).on("change", window[options.handler]);
+		$(this['0']).on(options.event, window[options.handler]);
 	}
 
 }(document);
@@ -70,10 +74,18 @@ function baseCurrencyChanged () {
 	// loadAjax();
 	return null;
 }
+
 function newCurrencyAdded () {
 	console.log("newCurrencyAdded", arguments);
+	$.trigger("update");
 	return null;
 }
+
+function updateTable () {
+	console.log("updateTable", arguments);
+	return null;
+}
+
 
 function loadAjax() {
 	$.getJSON( "https://openexchangerates.org/api/latest.json?app_id=f9009aea3ff84eceac990e86e968ce9d&callback=baba", function(data ) {
