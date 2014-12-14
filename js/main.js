@@ -34,7 +34,7 @@ void function (D) {
 			options['node'] 		= _items[i];
 			options['handler'] 		= $(_items[i]).attr("data-action");
 			options['event'] 		= $(_items[i]).attr("data-observe-event");
-			_observables[i] 		= new ObserverFactory(_items[i], options);	
+			_observables[i] 		= new ObservableItem(_items[i], options);	
 		}
 	}
 	
@@ -59,7 +59,7 @@ void function (D) {
 		return obj;
 	
 	};
-	function ObservableTextInput ( options) {
+	function ObservableItem ( options) {
 		//not doing null checks against options
 		//I could map more properties, but it's cumbersome for this test
 		this['0'] = options.node;
