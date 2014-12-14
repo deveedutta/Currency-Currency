@@ -1,79 +1,5 @@
 
 
-void function (D) {
-	var
-		window			= this || (0, eval)('this')	
-		//source		: http://stackoverflow.com/questions/14119988/return-this-0-evalthis/14120023#14120023
-		//courtesy		: knockout-js
-	,	undefined		= void 0
-	,	_observables 	= []
-	,	_items			= []
-	,	_curr_data		= null
-	,	dictionary	= null				//dictionary is a marker saying upcoming VARs are short-hands
-	,	_AC			= "appendChild"
-	,	CEL			= "createElement"
-	,	QSA			= "querySelectorAll"
-	,	GID			= "getElementById"
-	,	_IH			= "innerHTML"
-	
-	;
-	window._currencies		= []
-	var s 		= D[CEL]("script");
-	var s1 		= D[CEL]("script");
-	s.async 	= true;
-	s1.async 	= true;
-	s1.src		= "//code.jquery.com/jquery-1.10.2.js";
-	// s.src 	= "//code.jquery.com/jquery-2.1.1.js";			//production
-	s.src 		= "bower_components/jquery/dist/jquery.min.js";	//dev
-
-	D["body"][_AC](s1);
-	s1.onload  = function (){
-		s1.src		= "//code.jquery.com/ui/1.11.2/jquery-ui.js";
-		D["body"][_AC](s1);
-		s1.onload  = function (){
-			D["body"][_AC](s);
-		}
-	}
-	
-	s.onload = function () {
-		$(function () {
-			// $.getJSON( "https://gist.githubusercontent.com/Fluidbyte/2973986/raw/9ead0f85b6ee6071d018564fa5a314a0297212cc/Common-Currency.json",
-			$.getJSON( "js/currency-list.js",
-			function(data ) {
-				_curr_data = data;
-				for ( var name in _curr_data ) {
-					_currencies.push(name);
-				}
-			});
-			$parentContainer = $("#parentContainer");
-			_items 	 = $("[data-observable]", $parentContainer);
-			ObserverMapper();
-			
-			$( "#baseCurrencyType" ).autocomplete({
-				source: _currencies
-			});
-		});
-	};
-		
-	function ObserverMapper () {
-		var options = {};
-		for ( var i = 0; i<_items.length; i++ ) {
-			options['node'] 		= _items[i];
-			options['handler'] 		= $(_items[i]).attr("data-action");
-			options['event'] 		= $(_items[i]).attr("data-observe-event");
-			_observables[i] 		= new ObservableItem(options);	
-		}
-	}
-	
-	function ObservableItem ( options) {
-		//not doing null checks against options
-		//I could map more properties, but it's cumbersome for this test
-		this['0'] = options.node;
-		$(this['0']).on(options.event, window[options.handler]);
-	}
-
-}(document);
-
 function baseCurrencyChanged (e) {
 	
 		
@@ -116,3 +42,62 @@ window.onerror = function globalErrorListener() {
 	console.log(args);
 	
 };
+
+$(function () {
+		void function (D) {
+			var
+				window			= this || (0, eval)('this')	
+				//source		: http://stackoverflow.com/questions/14119988/return-this-0-evalthis/14120023#14120023
+				//courtesy		: knockout-js
+			,	undefined		= void 0
+			,	_observables 	= []
+			,	_items			= []
+			,	_curr_data		= null
+			,	dictionary	= null				//dictionary is a marker saying upcoming VARs are short-hands
+			,	_AC			= "appendChild"
+			,	CEL			= "createElement"
+			,	QSA			= "querySelectorAll"
+			,	GID			= "getElementById"
+			,	_IH			= "innerHTML"
+			
+			;
+			window._currencies		= [];
+				
+				
+				
+			
+				
+			function ObserverMapper () {
+				var options = {};
+				for ( var i = 0; i<_items.length; i++ ) {
+					options['node'] 		= _items[i];
+					options['handler'] 		= $(_items[i]).attr("data-action");
+					options['event'] 		= $(_items[i]).attr("data-observe-event");
+					_observables[i] 		= new ObservableItem(options);	
+				}
+			}
+			
+			function ObservableItem ( options) {
+				//not doing null checks against options
+				//I could map more properties, but it's cumbersome for this test
+				this['0'] = options.node;
+				$(this['0']).on(options.event, window[options.handler]);
+			}
+
+		}(document);
+	// $.getJSON( "https://gist.githubusercontent.com/Fluidbyte/2973986/raw/9ead0f85b6ee6071d018564fa5a314a0297212cc/Common-Currency.json",
+	$.getJSON( "js/currency-list.js",
+	function(data ) {
+		_curr_data = data;
+		for ( var name in _curr_data ) {
+			_currencies.push(name);
+		}
+	});
+	$parentContainer = $("#parentContainer");
+	_items 	 = $("[data-observable]", $parentContainer);
+	
+	
+	$( "#baseCurrencyType" ).autocomplete({
+		source: _currencies
+	});
+});
