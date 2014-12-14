@@ -38,27 +38,6 @@ void function (D) {
 		}
 	}
 	
-	function ObserverFactory(node, options) {
-		var type = node.nodeName == "INPUT" && node.type || node.nodeName ;
-		var obj = null;
-		switch (type) {
-			case "text":
-			obj = new ObservableTextInput(options);
-			break;
-			case "TABLE":
-			obj = new ObservableTextInput(options);
-			break;
-			
-			case "...":
-			// ...
-			break;
-			
-			default:
-			break;
-		}
-		return obj;
-	
-	};
 	function ObservableItem ( options) {
 		//not doing null checks against options
 		//I could map more properties, but it's cumbersome for this test
