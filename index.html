@@ -9,7 +9,7 @@
 		
 		
 		<!-- prod environment -->
-		<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" /> -->
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
 				
 		<!-- /prod environment -->
 		
@@ -35,15 +35,17 @@
 			<div class="row">
 				<div class="col-md-5">
 					<div class="input-group baseCurrencyContainer">
-						<input id="baseCurrencyType" data-observable="true" data-observe-event="keydown" data-action="baseCurrencyChanged" type="text" class="form-control" placeholder="Choose base Currency">
+						<input id="baseCurrencyType" type="text" class="form-control" placeholder="Choose base Currency">
 						<span class="input-group-addon search">
 							<span id="searchButton" class="glyphicon glyphicon-search"></span>
 						</span>
-						<!-- <ul id="baseCurrencySuggestions">
-							<li>dumb</li>
-							<li>dumb</li>
-							<li>dumb</li>
-						</ul> -->
+					</div>
+					<div style="padding: 15px;"></div>
+					<div class="input-group">
+						<input id="currencyAmount" type="number" class="form-control" placeholder="1">
+					</div>
+					<div class="input-group">
+						<input id="currencyType" type="text" disabled class="form-control" value="USD">
 					</div>
 				</div>
 				<div class="col-md-5">
