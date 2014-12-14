@@ -60,15 +60,17 @@ void function (D) {
 
 function baseCurrencyChanged (e) {
 	var THIS = $(e.target);
+	if (THIS.val().length < 1) return;
 	var $ul = $("#baseCurrencySuggestions");
 	$ul.empty();
 	var temp = [];
 	for( var i=0; i<_currencies.length; i++) {
-		_currencies[i].indexOf(THIS.value) && temp.push(_currencies[i]);
+		if(_currencies[i].indexOf(THIS[0].value) > 0)
+			temp.push(_currencies[i]);
 	}
+	console.log(temp);
 	for( i=0; i<temp.length; i++) {
 		$ul.append("<li>" + temp[i] + "</ul>");
-		console.log(temp[i]);
 	}
 	
 		
